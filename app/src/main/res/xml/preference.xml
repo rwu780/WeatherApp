@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <PreferenceCategory
+        android:key="unit_category"
+        app:title="Settings">
+
+        <ListPreference
+            android:dialogTitle="Units"
+            android:entries="@array/settings_list_preference_titles"
+            android:entryValues="@array/settings_list_preference_titles"
+            android:key="units_select"
+            android:title="Units"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>

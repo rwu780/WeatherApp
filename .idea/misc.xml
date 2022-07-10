@@ -13,8 +13,10 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fr_dashboard.xml" value="0.15416666666666667" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25427350427350426" />
         <entry key="app/src/main/res/layout/item_daily_forecast.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_hour_forcast.xml" value="0.25" />
+        <entry key="app/src/main/res/xml/preference.xml" value="0.25427350427350426" />
       </map>
     </option>
   </component>
