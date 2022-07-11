@@ -17,23 +17,26 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/app_background"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
+            app:contentInsetStartWithNavigation="0dp"
             >
 
             <EditText
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="24dp"
+                android:padding="12dp"
                 android:maxLines="1"
                 android:inputType="text"
                 tools:text="Vancouver, BC"
                 />
-
-
-
-
         </com.google.android.material.appbar.MaterialToolbar>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:dividerColor="@color/white"
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -43,6 +46,8 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:clipToPadding="false"
         tools:listitem="@layout/item_city_result"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
