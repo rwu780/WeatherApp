@@ -5,11 +5,11 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CurrentWeather(
+data class CurrentWeatherDto(
     @Json(name = "cloud")
     val cloud: Int?,
     @Json(name = "condition")
-    val condition: Condition?,
+    val conditionDto: ConditionDto,
     @Json(name = "feelslike_c")
     val feelslikeC: Double?,
     @Json(name = "feelslike_f")

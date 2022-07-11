@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class DailyTemperature(
+data class DailyTemperatureDto(
     @Json(name = "avghumidity")
     val avghumidity: Double?,
     @Json(name = "avgtemp_c")
@@ -17,7 +17,7 @@ data class DailyTemperature(
     @Json(name = "avgvis_miles")
     val avgvisMiles: Double?,
     @Json(name = "condition")
-    val condition: Condition?,
+    val conditionDto: ConditionDto,
     @Json(name = "daily_chance_of_rain")
     val dailyChanceOfRain: Int?,
     @Json(name = "daily_chance_of_snow")

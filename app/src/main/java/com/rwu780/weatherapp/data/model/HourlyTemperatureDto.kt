@@ -1,11 +1,12 @@
 package com.rwu780.weatherapp.data.model
 
 
+import com.rwu780.weatherapp.domain.model.HourlyForecast
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class HourlyTemperature(
+data class HourlyTemperatureDto(
     @Json(name = "chance_of_rain")
     val chanceOfRain: Int?,
     @Json(name = "chance_of_snow")
@@ -13,7 +14,7 @@ data class HourlyTemperature(
     @Json(name = "cloud")
     val cloud: Int?,
     @Json(name = "condition")
-    val condition: Condition?,
+    val conditionDto: ConditionDto,
     @Json(name = "dewpoint_c")
     val dewpointC: Double?,
     @Json(name = "dewpoint_f")
@@ -47,7 +48,7 @@ data class HourlyTemperature(
     @Json(name = "temp_f")
     val tempF: Double?,
     @Json(name = "time")
-    val time: String?,
+    val time: String,
     @Json(name = "time_epoch")
     val timeEpoch: Int?,
     @Json(name = "uv")
@@ -72,4 +73,12 @@ data class HourlyTemperature(
     val windchillC: Double?,
     @Json(name = "windchill_f")
     val windchillF: Double?
-)
+) {
+    fun toHourlyForecast() : HourlyForecast {
+        return HourlyForecast(
+            time,
+            tempC.toString(),
+            conditionDto.icon
+        )
+    }
+}

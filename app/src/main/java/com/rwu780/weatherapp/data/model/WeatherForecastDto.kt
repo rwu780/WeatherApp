@@ -1,15 +1,17 @@
 package com.rwu780.weatherapp.data.model
 
 
+
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ResponseWeatherForecast(
+data class WeatherForecastDto(
     @Json(name = "current")
-    val currentWeather: CurrentWeather?,
+    val currentWeatherDto: CurrentWeatherDto,
     @Json(name = "forecast")
-    val forecast: Forecast?,
+    val forecastDto: ForecastDto,
     @Json(name = "location")
-    val location: Location?
-)
+    val locationDto: LocationDto
+) {
+}
