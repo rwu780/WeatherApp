@@ -11,4 +11,5 @@
     <color name="textColor">#FFFFFF</color>
     <color name="dividerColor">#BBA1A1</color>
     <color name="itemBackGroundColor">#901B7D</color>
+    <color name="cityBackGroundColor">#4DD9D9D9</color>
 </resources>
