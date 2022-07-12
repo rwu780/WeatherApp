@@ -21,9 +21,12 @@ fun WeatherForecastDto.toCurrentWeather() : CurrentWeather {
         it.toDailyForecast()
     }
 
+    val city = this.locationDto.toCity()
+
     return CurrentWeather(
         this.currentWeatherDto.tempC.toString(),
-        this.currentWeatherDto.conditionDto.icon,
+        this.currentWeatherDto.conditionDto.text,
+        city,
         hourlyForecast,
         futureForecast
     )

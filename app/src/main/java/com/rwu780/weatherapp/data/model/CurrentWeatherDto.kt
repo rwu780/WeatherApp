@@ -4,7 +4,7 @@ package com.rwu780.weatherapp.data.model
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+
 data class CurrentWeatherDto(
     @Json(name = "cloud")
     val cloud: Int?,

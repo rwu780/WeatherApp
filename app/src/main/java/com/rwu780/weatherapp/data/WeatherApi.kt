@@ -9,13 +9,13 @@ import retrofit2.http.Query
 
 interface WeatherApi {
 
-    @GET("/search.json")
+    @GET("search.json")
     suspend fun searchCityByKeyword(
         @Query("key") api_key : String = BuildConfig.WEATHER_API_KEY,
         @Query("q") keyword : String
     ) : List<CityDto>
 
-    @GET("/forecast.json")
+    @GET("forecast.json")
     suspend fun getForecastByCityName(
         @Query("key") api_key: String = BuildConfig.WEATHER_API_KEY,
         @Query("q") keyword: String,
@@ -23,6 +23,6 @@ interface WeatherApi {
     ) : WeatherForecastDto
 
     companion object {
-        const val BASE_URL = "http://api.weatherapi.com/v1"
+        const val BASE_URL = "https://api.weatherapi.com/v1/"
     }
 }

@@ -1,6 +1,7 @@
 package com.rwu780.weatherapp.data.model
 
 
+import com.rwu780.weatherapp.domain.model.City
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -17,9 +18,16 @@ data class LocationDto(
     @Json(name = "lon")
     val lon: Double?,
     @Json(name = "name")
-    val name: String?,
+    val name: String,
     @Json(name = "region")
-    val region: String?,
+    val region: String,
     @Json(name = "tz_id")
     val tzId: String?
-)
+) {
+    fun toCity() : City {
+        return City(
+            name,
+            region
+        )
+    }
+}

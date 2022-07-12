@@ -5,7 +5,7 @@ import com.rwu780.weatherapp.domain.model.DailyForecast
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+
 data class DailyForecastDto(
     @Json(name = "astro")
     val astroDto: AstroDto?,

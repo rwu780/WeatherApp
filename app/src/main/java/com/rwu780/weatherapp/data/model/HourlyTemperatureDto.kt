@@ -5,7 +5,7 @@ import com.rwu780.weatherapp.domain.model.HourlyForecast
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+
 data class HourlyTemperatureDto(
     @Json(name = "chance_of_rain")
     val chanceOfRain: Int?,
