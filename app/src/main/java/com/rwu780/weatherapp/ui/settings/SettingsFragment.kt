@@ -1,4 +1,4 @@
-package com.rwu780.weatherapp.ui
+package com.rwu780.weatherapp.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

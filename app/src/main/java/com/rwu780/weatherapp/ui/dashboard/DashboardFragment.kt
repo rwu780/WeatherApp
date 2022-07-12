@@ -1,4 +1,4 @@
-package com.rwu780.weatherapp.ui
+package com.rwu780.weatherapp.ui.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater

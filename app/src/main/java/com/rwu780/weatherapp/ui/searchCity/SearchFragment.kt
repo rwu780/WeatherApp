@@ -1,4 +1,4 @@
-package com.rwu780.weatherapp.ui
+package com.rwu780.weatherapp.ui.searchCity
 
 
 import android.os.Bundle

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.rwu780.weatherapp.ui.DashboardFragment"
+        android:name="com.rwu780.weatherapp.ui.dashboard.DashboardFragment"
         android:label="DashboardFragment" >
         <action
             android:id="@+id/action_dashboardFragment_to_settingsFragment"
@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.rwu780.weatherapp.ui.SettingsFragment"
+        android:name="com.rwu780.weatherapp.ui.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.rwu780.weatherapp.ui.SearchFragment"
+        android:name="com.rwu780.weatherapp.ui.searchCity.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>

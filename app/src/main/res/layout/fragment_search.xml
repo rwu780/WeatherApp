@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SearchFragment"
+    tools:context=".ui.searchCity.SearchFragment"
     android:background="@drawable/app_background">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             app:dividerColor="@color/white"
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
