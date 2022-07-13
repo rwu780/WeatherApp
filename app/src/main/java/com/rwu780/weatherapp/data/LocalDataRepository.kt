@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.rwu780.weatherapp.domain.Temperature_Units
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -24,6 +25,7 @@ class LocalDataRepository @Inject constructor(
 
     companion object {
         val CITY = stringPreferencesKey("city_name")
+        val UNITS = stringPreferencesKey("temperature_units")
     }
 
     suspend fun saveCityNameToDataStore(cityName: String){
@@ -35,6 +37,17 @@ class LocalDataRepository @Inject constructor(
     suspend fun getCityNameFromDataStore() : String {
         val preferences = context.dataStore.data.first()
         return preferences[CITY] ?: ""
+    }
+
+    suspend fun saveTemperatureUnitsToDataStore(units: String){
+        context.dataStore.edit { preferences ->
+            preferences[UNITS] = units
+        }
+    }
+
+    suspend fun getTemperatureUnitsFromDataStore() : String? {
+        val preferences = context.dataStore.data.first()
+        return preferences[UNITS]
     }
 
 }

@@ -40,6 +40,7 @@ fun WeatherForecastDto.toCurrentWeather() : CurrentWeather {
 
     return CurrentWeather(
         this.currentWeatherDto.tempC.toString(),
+        this.currentWeatherDto.tempF.toString(),
         this.currentWeatherDto.conditionDto.text,
         city,
         hourlyForecast,

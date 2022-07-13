@@ -69,6 +69,7 @@ class DashboardFragment : Fragment() {
     override fun onResume() {
         (activity as AppCompatActivity).supportActionBar?.hide()
         viewModel.loadCityName()
+        viewModel.loadUnits()
         super.onResume()
     }
 
@@ -97,13 +98,14 @@ class DashboardFragment : Fragment() {
 
     private fun bindView(currentWeather: CurrentWeather){
         _binding.tvCityHeader.text = currentWeather.city.name
-        _binding.tvCurrentWeather.text = currentWeather.current_temperature
+        _binding.tvWeatherDescription.text = currentWeather.current_status
+        _binding.tvCurrentWeather.text = currentWeather.getCurrentTemperature(viewModel.temperatureUnits)
         _binding.iconCurrentWeather.setImageResource(getIconBasedOnWeatherStatus(currentWeather.current_status))
 
-        val hourlyWeatherAdapter = HourlyWeatherAdapter(currentWeather.hourlyForecast)
+        val hourlyWeatherAdapter = HourlyWeatherAdapter(currentWeather.hourlyForecast, viewModel.temperatureUnits)
         _binding.rvHourlyForecast.adapter = hourlyWeatherAdapter
 
-        val dailyWeatherAdapter = DailyWeatherAdapter(currentWeather.dailyForecast)
+        val dailyWeatherAdapter = DailyWeatherAdapter(currentWeather.dailyForecast, viewModel.temperatureUnits)
         _binding.rvDailyForecast.adapter = dailyWeatherAdapter
 
     }

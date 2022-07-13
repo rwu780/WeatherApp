@@ -78,6 +78,7 @@ data class HourlyTemperatureDto(
         return HourlyForecast(
             time,
             tempC.toString(),
+            tempF.toString(),
             conditionDto.text
         )
     }

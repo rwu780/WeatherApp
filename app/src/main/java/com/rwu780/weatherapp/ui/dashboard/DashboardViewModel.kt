@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rwu780.weatherapp.domain.usecases.GetCurrentLocation
-import com.rwu780.weatherapp.domain.usecases.GetWeatherByCityName
-import com.rwu780.weatherapp.domain.usecases.RetrieveSavedCityName
-import com.rwu780.weatherapp.domain.usecases.StoredLocation
+import com.rwu780.weatherapp.domain.Temperature_Units
+import com.rwu780.weatherapp.domain.usecases.*
 import com.rwu780.weatherapp.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -20,7 +18,8 @@ class DashboardViewModel @Inject constructor(
     private val getWeatherByCityName: GetWeatherByCityName,
     private val retrieveSavedCityName: RetrieveSavedCityName,
     private val getCurrentLocation: GetCurrentLocation,
-    private val storedLocation: StoredLocation
+    private val storedLocation: StoredLocation,
+    private val loadTemperatureUnits: LoadTemperatureUnits
 ) : ViewModel() {
 
     private val _dashboardState = MutableStateFlow<DashboardUiState>(DashboardUiState.Empty)
@@ -28,6 +27,8 @@ class DashboardViewModel @Inject constructor(
 
     private val _cityName = MutableLiveData("")
     val cityName : LiveData<String> = _cityName
+
+    lateinit var temperatureUnits : Temperature_Units
 
     fun loadCityName() {
         viewModelScope.launch {
@@ -55,8 +56,7 @@ class DashboardViewModel @Inject constructor(
 
     private fun saveLocation(latlong: String) {
         runBlocking {
-            val cityName = "$latlong"
-            storedLocation(cityName)
+            storedLocation(latlong)
         }
     }
 
@@ -92,6 +92,13 @@ class DashboardViewModel @Inject constructor(
                         else -> Unit
                     }
                 }
+        }
+    }
+
+    fun loadUnits() {
+        viewModelScope.launch {
+            temperatureUnits = loadTemperatureUnits()
+
         }
     }
 }
