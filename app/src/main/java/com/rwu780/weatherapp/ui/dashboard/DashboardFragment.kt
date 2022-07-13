@@ -1,6 +1,8 @@
 package com.rwu780.weatherapp.ui.dashboard
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -89,6 +91,15 @@ class DashboardFragment : Fragment() {
 
         _binding.iconLocation.setOnClickListener {
             viewModel.fetchCurrentLocation()
+        }
+
+        _binding.tvCityHeader.setOnClickListener {
+            val mapIntent: Intent = Intent(Intent.ACTION_VIEW).apply {
+                this.data = Uri.parse(
+                    "geo:0,0?q=${_binding.tvCityHeader.text}"
+                )
+            }
+            startActivity(mapIntent)
         }
 
         _binding.rvHourlyForecast.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
