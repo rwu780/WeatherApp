@@ -37,7 +37,7 @@ class DefaultLocationTracker @Inject constructor(
 
 
 
-        if (!hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission || !isGpsEnabled){
+        if (!hasAccessCoarseLocationPermission || !isGpsEnabled){
             return null
         }
 
