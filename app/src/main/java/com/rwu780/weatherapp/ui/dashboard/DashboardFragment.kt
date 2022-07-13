@@ -1,11 +1,12 @@
 package com.rwu780.weatherapp.ui.dashboard
 
+import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,8 +25,25 @@ private const val TAG = "DashboardFragment"
 class DashboardFragment : Fragment() {
 
     private lateinit var _binding : FragmentDashboardBinding
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     private val viewModel: DashboardViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+            viewModel.loadCityName()
+        }
+
+        permissionLauncher.launch(arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        ))
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +84,10 @@ class DashboardFragment : Fragment() {
 
         _binding.iconSearch.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_searchFragment)
+        }
+
+        _binding.iconLocation.setOnClickListener {
+            viewModel.fetchCurrentLocation()
         }
 
         _binding.rvHourlyForecast.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

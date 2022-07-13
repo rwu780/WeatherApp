@@ -1,10 +1,7 @@
 package com.rwu780.weatherapp.ui.searchCity
 
-import android.util.Log
-import androidx.compose.runtime.key
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rwu780.weatherapp.data.LocalDataRepository
 import com.rwu780.weatherapp.domain.model.City
 import com.rwu780.weatherapp.domain.usecases.GetCityInfo
 import com.rwu780.weatherapp.domain.usecases.StoredLocation
@@ -14,7 +11,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject

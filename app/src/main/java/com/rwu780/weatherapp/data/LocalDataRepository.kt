@@ -34,7 +34,7 @@ class LocalDataRepository @Inject constructor(
 
     suspend fun getCityNameFromDataStore() : String {
         val preferences = context.dataStore.data.first()
-        return preferences[CITY] ?: "Edmonton,AB"
+        return preferences[CITY] ?: ""
     }
 
 }

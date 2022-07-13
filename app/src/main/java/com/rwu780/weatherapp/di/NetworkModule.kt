@@ -1,5 +1,8 @@
 package com.rwu780.weatherapp.di
 
+import android.app.Application
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.rwu780.weatherapp.data.WeatherApi
 import com.rwu780.weatherapp.data.WeatherRepositoryImpl
 import com.rwu780.weatherapp.domain.WeatherRepository
@@ -35,6 +38,12 @@ class NetworkModule {
     @Singleton
     fun provideRepository(api: WeatherApi): WeatherRepository {
         return WeatherRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFuseLocationProvderClient(app: Application): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(app)
     }
 
 }

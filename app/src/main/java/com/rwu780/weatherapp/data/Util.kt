@@ -59,7 +59,6 @@ fun getCurrentDate(): String {
 
 fun getNextDate(currentDate: String): String {
     val formatter = SimpleDateFormat("yyyy-MM-dd")
-    val today = formatter.parse(currentDate)
 
     val c: Calendar = Calendar.getInstance()
     c.time = formatter.parse(currentDate)
@@ -67,15 +66,11 @@ fun getNextDate(currentDate: String): String {
 
     return formatter.format(c.time)
 
-
 }
 
 fun parseStringToDate(input: String): Date {
 
-
-
     val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm")
-
     return formatter.parse(input)
 }
 

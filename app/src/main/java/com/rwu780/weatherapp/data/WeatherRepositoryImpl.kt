@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
-import java.lang.Exception
 import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
@@ -50,14 +49,12 @@ class WeatherRepositoryImpl @Inject constructor(
     override fun getForecastByCityName(cityname: String): Flow<ResultState<CurrentWeather>> = flow {
 
         emit(ResultState.Loading())
-
-        val fetchWeather : WeatherForecastDto = weatherApi.getForecastByCityName(keyword = cityname)
-        Log.d("TAG", "getForecastByCityName: $fetchWeather")
-
-        val weatherForecast: CurrentWeather = fetchWeather.toCurrentWeather()
-
-        emit(ResultState.Success(weatherForecast))
-
-
+        try{
+            val fetchWeather : WeatherForecastDto = weatherApi.getForecastByCityName(keyword = cityname)
+            val weatherForecast: CurrentWeather = fetchWeather.toCurrentWeather()
+            emit(ResultState.Success(weatherForecast))
+        } catch (e: Exception){
+            emit(ResultState.Error(e.message))
+        }
     }.flowOn(Dispatchers.IO)
 }

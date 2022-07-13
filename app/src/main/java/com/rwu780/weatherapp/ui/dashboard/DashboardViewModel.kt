@@ -1,29 +1,26 @@
 package com.rwu780.weatherapp.ui.dashboard
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rwu780.weatherapp.data.LocalDataRepository
-
-
+import com.rwu780.weatherapp.domain.usecases.GetCurrentLocation
 import com.rwu780.weatherapp.domain.usecases.GetWeatherByCityName
 import com.rwu780.weatherapp.domain.usecases.RetrieveSavedCityName
+import com.rwu780.weatherapp.domain.usecases.StoredLocation
 import com.rwu780.weatherapp.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
-import kotlin.math.log
-
-private const val TAG = "DashboardViewModel"
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val getWeatherByCityName: GetWeatherByCityName,
     private val retrieveSavedCityName: RetrieveSavedCityName,
-    private val localDataRepository: LocalDataRepository
+    private val getCurrentLocation: GetCurrentLocation,
+    private val storedLocation: StoredLocation
 ) : ViewModel() {
 
     private val _dashboardState = MutableStateFlow<DashboardUiState>(DashboardUiState.Empty)
@@ -34,20 +31,38 @@ class DashboardViewModel @Inject constructor(
 
     fun loadCityName() {
         viewModelScope.launch {
-
             val name = retrieveSavedCityName()
-            _cityName.value = name
 
+            if (name.isBlank()){
+                fetchCurrentLocation()
+            } else {
+                _cityName.value = name
+            }
         }
     }
 
-    private fun fetchFromLocation(): String {
+    fun fetchCurrentLocation() {
+        viewModelScope.launch {
+            getCurrentLocation()?.let { location ->
+                val newLocation="${location.latitude},${location.longitude}"
 
-        return "Vancouver,BC"
+                saveLocation(newLocation)
+                _cityName.value=newLocation
+            }
+        }
+
+    }
+
+    private fun saveLocation(latlong: String) {
+        runBlocking {
+            val cityName = "$latlong"
+            storedLocation(cityName)
+        }
     }
 
     fun fetchWeather(keyword: String) {
-        Log.d(TAG, "fetchWeather: $keyword")
+        if (keyword.isBlank())
+            return
 
         viewModelScope.launch {
             _dashboardState.value = DashboardUiState.Loading
