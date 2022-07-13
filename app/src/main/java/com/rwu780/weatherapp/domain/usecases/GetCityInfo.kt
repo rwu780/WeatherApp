@@ -5,8 +5,9 @@ import com.rwu780.weatherapp.domain.model.City
 import com.rwu780.weatherapp.util.ResultState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class GetCityInfo(
+class GetCityInfo @Inject constructor(
     private val repository: WeatherRepository
 ){
 
@@ -15,6 +16,6 @@ class GetCityInfo(
             return flow {  }
         }
 
-        return repository.searchCityByKeyWord(word)
+        return repository.searchCityByKeyWord(word.replace(" ", ""))
     }
 }

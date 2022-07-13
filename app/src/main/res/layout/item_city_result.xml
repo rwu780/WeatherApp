@@ -8,12 +8,12 @@
     app:cardCornerRadius="16dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@color/cityBackGroundColor"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/cityBackGroundColor"
         >
 
         <TextView
@@ -26,6 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
+
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

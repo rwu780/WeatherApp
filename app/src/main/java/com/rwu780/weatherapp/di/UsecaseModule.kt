@@ -17,9 +17,7 @@ class UsecaseModule {
 
     @Provides
     @Singleton
-    fun provideLocalDataRepository(@ApplicationContext cxt: Context) : LocalDataRepository{
-        return LocalDataRepository(cxt)
-    }
+    fun provideLocalDataRepository(@ApplicationContext cxt: Context) = LocalDataRepository(cxt)
 
     @Provides
     @Singleton

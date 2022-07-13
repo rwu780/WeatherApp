@@ -7,28 +7,34 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import javax.inject.Singleton
 
+private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name="com.rwu780.weatherApp")
+
+@Singleton
 class LocalDataRepository @Inject constructor(
-    val context: Context
+    private val context: Context
 ) {
 
-    private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name="com.rwu780.weatherApp")
-
     companion object {
-        val UNITS = booleanPreferencesKey("temperature_units")
         val CITY = stringPreferencesKey("city_name")
     }
 
     suspend fun saveCityNameToDataStore(cityName: String){
-        context.dataStore.edit {
-            it[CITY] = cityName
+        context.dataStore.edit { preferences ->
+            preferences[CITY] = cityName
         }
     }
 
-    fun getCityNameFromDataStore() = context.dataStore.data.map { preferences ->
-        preferences[CITY] ?: ""
+    suspend fun getCityNameFromDataStore() : String {
+        val preferences = context.dataStore.data.first()
+        return preferences[CITY] ?: "Edmonton,AB"
     }
 
 }

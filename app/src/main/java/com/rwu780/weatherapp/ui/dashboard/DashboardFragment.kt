@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,19 +37,20 @@ class DashboardFragment : Fragment() {
             container,
             false
         )
-        collectUiStates()
+
         return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
 
+        collectUiStates()
     }
 
     override fun onResume() {
         (activity as AppCompatActivity).supportActionBar?.hide()
+        viewModel.loadCityName()
         super.onResume()
     }
 
@@ -72,7 +74,6 @@ class DashboardFragment : Fragment() {
     }
 
     private fun bindView(currentWeather: CurrentWeather){
-        Log.d(TAG, "bindView: $currentWeather")
         _binding.tvCityHeader.text = currentWeather.city.name
         _binding.tvCurrentWeather.text = currentWeather.current_temperature
         _binding.iconCurrentWeather.setImageResource(getIconBasedOnWeatherStatus(currentWeather.current_status))
@@ -99,8 +100,8 @@ class DashboardFragment : Fragment() {
     }
 
     private fun successStates(currentWeather: CurrentWeather) {
-        _binding.progressBar.visibility = View.GONE
         bindView(currentWeather)
+        _binding.progressBar.visibility = View.GONE
     }
 
     private fun loadingStates() {
@@ -115,6 +116,9 @@ class DashboardFragment : Fragment() {
             errorMsg,
             Snackbar.LENGTH_SHORT
         ).show()
+
+        _binding.rvDailyForecast.adapter = null
+        _binding.rvHourlyForecast.adapter = null
 
         _binding.tvCityHeader.text = ""
         _binding.tvCurrentWeather.text = "-- --"

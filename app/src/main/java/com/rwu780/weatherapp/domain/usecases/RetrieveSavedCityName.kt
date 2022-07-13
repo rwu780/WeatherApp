@@ -1,5 +1,6 @@
 package com.rwu780.weatherapp.domain.usecases
 
+import android.util.Log
 import com.rwu780.weatherapp.data.LocalDataRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -8,7 +9,8 @@ class RetrieveSavedCityName @Inject constructor(
     private val localDataRepository: LocalDataRepository
 ) {
 
-    operator fun invoke() : Flow<String> {
+    suspend operator fun invoke() : String {
+        Log.d("in", "invoke: ")
         return localDataRepository.getCityNameFromDataStore()
     }
 }

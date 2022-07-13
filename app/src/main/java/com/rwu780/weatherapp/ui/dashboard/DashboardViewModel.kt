@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rwu780.weatherapp.data.LocalDataRepository
 
 
 import com.rwu780.weatherapp.domain.usecases.GetWeatherByCityName
@@ -14,13 +15,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 private const val TAG = "DashboardViewModel"
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val getWeatherByCityName: GetWeatherByCityName,
-    private val retrieveSavedCityName: RetrieveSavedCityName
+    private val retrieveSavedCityName: RetrieveSavedCityName,
+    private val localDataRepository: LocalDataRepository
 ) : ViewModel() {
 
     private val _dashboardState = MutableStateFlow<DashboardUiState>(DashboardUiState.Empty)
@@ -29,19 +32,12 @@ class DashboardViewModel @Inject constructor(
     private val _cityName = MutableLiveData("")
     val cityName : LiveData<String> = _cityName
 
-    init {
-        loadCityName()
-    }
-
-    private fun loadCityName() {
+    fun loadCityName() {
         viewModelScope.launch {
-            retrieveSavedCityName().collect {
-                if (it.isNotBlank()){
-                    _cityName.value = it
-                } else {
-                    _cityName.value = fetchFromLocation()
-                }
-            }
+
+            val name = retrieveSavedCityName()
+            _cityName.value = name
+
         }
     }
 
@@ -51,13 +47,13 @@ class DashboardViewModel @Inject constructor(
     }
 
     fun fetchWeather(keyword: String) {
+        Log.d(TAG, "fetchWeather: $keyword")
 
         viewModelScope.launch {
             _dashboardState.value = DashboardUiState.Loading
 
             getWeatherByCityName(keyword)
                 .catch {
-                    Log.d(TAG, "fetchWeather: " + it.message)
                     _dashboardState.value = DashboardUiState.Error(
                         it.message ?: "Unknown Error"
                     )

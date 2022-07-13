@@ -1,5 +1,6 @@
 package com.rwu780.weatherapp.data
 
+import android.util.Log
 import com.rwu780.weatherapp.data.model.CityDto
 import com.rwu780.weatherapp.data.model.WeatherForecastDto
 import com.rwu780.weatherapp.domain.WeatherRepository
@@ -14,7 +15,6 @@ import retrofit2.HttpException
 import java.lang.Exception
 import javax.inject.Inject
 
-private const val TAG = "WeatherRepositoryImpl"
 class WeatherRepositoryImpl @Inject constructor(
     private val weatherApi : WeatherApi
 ) : WeatherRepository {
@@ -28,19 +28,22 @@ class WeatherRepositoryImpl @Inject constructor(
 
             if (findMatchedCities.isEmpty()){
                 emit(ResultState.Error("No city matched keyword"))
-            }
-
-            val matched_cities : List<City> = findMatchedCities.let { matchedCities ->
-                matchedCities.map {
-                    it.toCity()
+            } else {
+                val matched_cities : List<City> = findMatchedCities.let { matchedCities ->
+                    matchedCities.map {
+                        it.toCity()
+                    }
                 }
+
+                emit(ResultState.Success(matched_cities))
+
             }
 
-            emit(ResultState.Success(matched_cities))
+
 
         } catch (e: HttpException){
 
-            emit(ResultState.Error("Unable to fetch cities, please check your internet connections"))
+            emit(ResultState.Error(e.message()))
         }
     }.flowOn(Dispatchers.IO)
 
@@ -48,15 +51,13 @@ class WeatherRepositoryImpl @Inject constructor(
 
         emit(ResultState.Loading())
 
-        try {
-            val fetchWeather : WeatherForecastDto = weatherApi.getForecastByCityName(keyword = cityname)
+        val fetchWeather : WeatherForecastDto = weatherApi.getForecastByCityName(keyword = cityname)
+        Log.d("TAG", "getForecastByCityName: $fetchWeather")
 
-            val weatherForecast: CurrentWeather = fetchWeather.toCurrentWeather()
+        val weatherForecast: CurrentWeather = fetchWeather.toCurrentWeather()
 
-            emit(ResultState.Success(weatherForecast))
+        emit(ResultState.Success(weatherForecast))
 
-        } catch (e: Exception){
-            emit(ResultState.Error("Unable to fetch data, please check your internet connections"))
-        }
+
     }.flowOn(Dispatchers.IO)
 }

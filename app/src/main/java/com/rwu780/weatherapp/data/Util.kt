@@ -1,20 +1,32 @@
 package com.rwu780.weatherapp.data
 
 
+import com.rwu780.weatherapp.data.model.DailyForecastDto
 import com.rwu780.weatherapp.data.model.WeatherForecastDto
 import com.rwu780.weatherapp.domain.model.CurrentWeather
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 
 fun WeatherForecastDto.toCurrentWeather() : CurrentWeather {
 
-    val currentDate = getCurrentDate()
+    var currentDate = getCurrentDate()
 
-    val (currentToday, upcomingDay) = this.forecastDto.dailyForecastDto.partition { it.date == currentDate }
+    var forecast : Pair<List<DailyForecastDto>, List<DailyForecastDto>> = this.forecastDto.dailyForecastDto.partition { it.date == currentDate }
 
-    val hourlyForecast = currentToday[0].hourlyTemperatureDto.map {
+
+    if (forecast.first.isEmpty()){
+        currentDate = getNextDate(currentDate)
+        forecast = this.forecastDto.dailyForecastDto.partition { date ->
+            date.date == currentDate
+
+        }
+    }
+
+    val currentDay = forecast.first
+    val upcomingDay = forecast.second
+
+    val hourlyForecast = currentDay[0].hourlyTemperatureDto.map {
         it.toHourlyForecast()
     }.filter {
         Date() < parseStringToDate(it.date)
@@ -41,6 +53,20 @@ fun getCurrentDate(): String {
     val formatter = SimpleDateFormat("yyyy-MM-dd")
 
     return formatter.format(Date())
+
+}
+
+
+fun getNextDate(currentDate: String): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd")
+    val today = formatter.parse(currentDate)
+
+    val c: Calendar = Calendar.getInstance()
+    c.time = formatter.parse(currentDate)
+    c.add(Calendar.DATE, 1)
+
+    return formatter.format(c.time)
+
 
 }
 
