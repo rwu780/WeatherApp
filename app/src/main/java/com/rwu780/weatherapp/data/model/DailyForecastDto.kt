@@ -23,7 +23,7 @@ data class DailyForecastDto(
             date,
             dailyTemperatureDto.maxtempC.toString(),
             dailyTemperatureDto.mintempC.toString(),
-            dailyTemperatureDto.conditionDto.icon
+            dailyTemperatureDto.conditionDto.text
         )
     }
 }

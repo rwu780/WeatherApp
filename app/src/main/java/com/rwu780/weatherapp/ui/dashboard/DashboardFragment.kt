@@ -1,6 +1,7 @@
 package com.rwu780.weatherapp.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.rwu780.weatherapp.R
 import com.rwu780.weatherapp.databinding.FragmentDashboardBinding
 import com.rwu780.weatherapp.domain.model.CurrentWeather
 import dagger.hilt.android.AndroidEntryPoint
+
+private const val TAG = "DashboardFragment"
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
@@ -50,7 +54,9 @@ class DashboardFragment : Fragment() {
 
     private fun initView() {
 
-        viewModel.fetchWeather("Nanaimo,BC")
+        viewModel.cityName.observe(viewLifecycleOwner) {
+            viewModel.fetchWeather(it)
+        }
 
         _binding.iconSetting.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_settingsFragment)
@@ -60,12 +66,22 @@ class DashboardFragment : Fragment() {
             findNavController().navigate(R.id.action_dashboardFragment_to_searchFragment)
         }
 
+        _binding.rvHourlyForecast.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        _binding.rvDailyForecast.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
     }
 
     private fun bindView(currentWeather: CurrentWeather){
+        Log.d(TAG, "bindView: $currentWeather")
         _binding.tvCityHeader.text = currentWeather.city.name
         _binding.tvCurrentWeather.text = currentWeather.current_temperature
         _binding.iconCurrentWeather.setImageResource(getIconBasedOnWeatherStatus(currentWeather.current_status))
+
+        val hourlyWeatherAdapter = HourlyWeatherAdapter(currentWeather.hourlyForecast)
+        _binding.rvHourlyForecast.adapter = hourlyWeatherAdapter
+
+        val dailyWeatherAdapter = DailyWeatherAdapter(currentWeather.dailyForecast)
+        _binding.rvDailyForecast.adapter = dailyWeatherAdapter
 
     }
 
@@ -103,6 +119,4 @@ class DashboardFragment : Fragment() {
         _binding.tvCityHeader.text = ""
         _binding.tvCurrentWeather.text = "-- --"
     }
-
-
 }

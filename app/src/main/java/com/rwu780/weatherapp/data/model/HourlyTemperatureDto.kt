@@ -78,7 +78,7 @@ data class HourlyTemperatureDto(
         return HourlyForecast(
             time,
             tempC.toString(),
-            conditionDto.icon
+            conditionDto.text
         )
     }
 }

@@ -42,7 +42,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
             emit(ResultState.Error("Unable to fetch cities, please check your internet connections"))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     override fun getForecastByCityName(cityname: String): Flow<ResultState<CurrentWeather>> = flow {
 
