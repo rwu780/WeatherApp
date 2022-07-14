@@ -31,6 +31,8 @@
                 android:maxLines="1"
                 android:inputType="text"
                 tools:text="Vancouver, BC"
+                android:textAppearance="@style/header2Text"
+                android:textColor="@color/textColor"
                 />
         </com.google.android.material.appbar.MaterialToolbar>
         <com.google.android.material.divider.MaterialDivider
