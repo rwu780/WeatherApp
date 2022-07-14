@@ -15,7 +15,7 @@ class GetCityInfo @Inject constructor(
         if (word.isBlank()){
             return flow {  }
         }
-
-        return repository.searchCityByKeyWord(word.replace(" ", ""))
+        val keyword = word.trim().replace(" ","%20")
+        return repository.searchCityByKeyWord(keyword)
     }
 }
