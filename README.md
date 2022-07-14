@@ -7,4 +7,6 @@ https://www.figma.com/proto/iZC4twEV7tKlRlCLybJjtc/WeatherApp?page-id=0%3A1&node
 ## API
 https://www.weatherapi.com/
 
+## Privacy Policy Link
+https://www.termsfeed.com/live/8368139c-0032-4a00-b787-844f70ba36df
 
