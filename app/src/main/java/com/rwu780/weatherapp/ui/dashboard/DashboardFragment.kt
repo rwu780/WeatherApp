@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -21,7 +22,6 @@ import com.rwu780.weatherapp.databinding.FragmentDashboardBinding
 import com.rwu780.weatherapp.domain.model.CurrentWeather
 import dagger.hilt.android.AndroidEntryPoint
 
-private const val TAG = "DashboardFragment"
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
