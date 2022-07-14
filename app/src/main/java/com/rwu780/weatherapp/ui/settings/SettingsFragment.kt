@@ -16,12 +16,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference, rootKey)
+
+        (activity as AppCompatActivity).title = "Settings"
         initValues()
     }
 
 
 
     override fun onResume() {
+        (activity as AppCompatActivity).title = "Settings"
         (activity as AppCompatActivity).supportActionBar?.show()
         super.onResume()
     }

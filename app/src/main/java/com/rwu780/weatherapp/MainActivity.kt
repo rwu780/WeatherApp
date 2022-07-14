@@ -2,18 +2,11 @@ package com.rwu780.weatherapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.rwu780.weatherapp.databinding.ActivityMainBinding
-import com.rwu780.weatherapp.ui.dashboard.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_android_internal_builders_ActivityComponentBuilder
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,16 +25,16 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController)
 
-        setupAd()
+//        setupAd()
 
     }
 
-    private fun setupAd(){
-        MobileAds.initialize(this) {}
-
-        val adRequest = AdRequest.Builder().build()
-        _binding.adView.loadAd(adRequest)
-    }
+//    private fun setupAd(){
+//        MobileAds.initialize(this) {}
+//
+//        val adRequest = AdRequest.Builder().build()
+//        _binding.adView.loadAd(adRequest)
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

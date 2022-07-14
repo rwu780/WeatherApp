@@ -14,6 +14,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/settings"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_baseline_settings_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,6 +25,7 @@
         android:layout_height="24dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_baseline_search_24"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toStartOf="@id/icon_location"
         app:layout_constraintTop_toTopOf="@id/icon_setting" />
 
@@ -33,6 +35,7 @@
         android:layout_height="24dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_baseline_gps_fixed_24"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toStartOf="@id/icon_setting"
         app:layout_constraintTop_toTopOf="@id/icon_setting" />
 
@@ -47,7 +50,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:clickable="true"
-        tools:text="Vancouver" />
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        tools:text="Vancouver"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/tv_weather_description"

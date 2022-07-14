@@ -2,14 +2,19 @@ package com.rwu780.weatherapp.ui.dashboard
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -28,6 +33,8 @@ class DashboardFragment : Fragment() {
 
     private lateinit var _binding : FragmentDashboardBinding
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+
+    private val REQUEST_CODE = 100
 
     private val viewModel: DashboardViewModel by viewModels()
 
@@ -69,6 +76,7 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onResume() {
+        (activity as AppCompatActivity).title = "The Weather App"
         (activity as AppCompatActivity).supportActionBar?.hide()
         viewModel.loadCityName()
         viewModel.loadUnits()
@@ -90,7 +98,7 @@ class DashboardFragment : Fragment() {
         }
 
         _binding.iconLocation.setOnClickListener {
-            viewModel.fetchCurrentLocation()
+            checkLocationPermission(REQUEST_CODE)
         }
 
         _binding.tvCityHeader.setOnClickListener {
@@ -105,6 +113,36 @@ class DashboardFragment : Fragment() {
         _binding.rvHourlyForecast.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         _binding.rvDailyForecast.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+    }
+
+    private fun checkLocationPermission(requestCode: Int) {
+
+        if (
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fetchCurrentLocation()
+        }
+
+        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), requestCode)
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                fetchCurrentLocation()
+            } else {
+                Toast.makeText(context, "Location permission not granted", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun bindView(currentWeather: CurrentWeather){
@@ -132,6 +170,10 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun fetchCurrentLocation() {
+        viewModel.fetchCurrentLocation()
     }
 
     private fun successStates(currentWeather: CurrentWeather) {
