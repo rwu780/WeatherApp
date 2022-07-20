@@ -1,6 +1,7 @@
 package com.rwu780.weatherapp.di
 
 import android.app.Application
+import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.rwu780.weatherapp.data.WeatherApi
@@ -11,6 +12,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -42,8 +44,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideFuseLocationProvderClient(app: Application): FusedLocationProviderClient {
-        return LocationServices.getFusedLocationProviderClient(app)
+    fun provideFuseLocationProvderClient(@ApplicationContext cxt: Context): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(cxt)
     }
 
 }

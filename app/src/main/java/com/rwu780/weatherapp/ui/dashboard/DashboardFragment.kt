@@ -124,10 +124,9 @@ class DashboardFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             fetchCurrentLocation()
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), requestCode)
         }
-
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), requestCode)
-
     }
 
     override fun onRequestPermissionsResult(
@@ -140,7 +139,7 @@ class DashboardFragment : Fragment() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 fetchCurrentLocation()
             } else {
-                Toast.makeText(context, "Location permission not granted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Location permission not granted", Toast.LENGTH_LONG).show()
             }
         }
     }

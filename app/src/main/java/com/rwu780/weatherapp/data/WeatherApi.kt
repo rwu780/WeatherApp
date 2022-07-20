@@ -6,7 +6,6 @@ import com.rwu780.weatherapp.data.model.WeatherForecastDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
 interface WeatherApi {
 
     @GET("search.json")

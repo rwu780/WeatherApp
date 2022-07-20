@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.rwu780.weatherapp.domain.location.LocationTracker
@@ -35,16 +36,14 @@ class DefaultLocationTracker @Inject constructor(
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
-
-
         if (!hasAccessCoarseLocationPermission || !isGpsEnabled){
             return null
         }
 
         return suspendCancellableCoroutine { cont ->
             locationClient.lastLocation.apply {
-                if (isComplete) {
-                    if(isSuccessful) {
+                if (this.isComplete){
+                    if(isSuccessful){
                         cont.resume(result)
                     } else {
                         cont.resume(null)
@@ -63,5 +62,6 @@ class DefaultLocationTracker @Inject constructor(
                 }
             }
         }
+
     }
 }
